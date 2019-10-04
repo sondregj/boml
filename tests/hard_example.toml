@@ -1,5 +1,5 @@
-# Test file for TOML
-# Only this one tries to emulate a TOML file written by a user of the kind of parser writers probably hate
+# Test file for BOML
+# Only this one tries to emulate a BOML file written by a user of the kind of parser writers probably hate
 # This part you'll really hate
 
 [the]
@@ -30,4 +30,4 @@ test_string = "You'll hate me after this - #"          # " Annoying, isn't it?
 #         "or here,
 #         and here"
 #         ]     End of array comment, forgot the #
-#number = 3.14  pi <--again forgot the #         
+#number = 3.14  pi <--again forgot the #

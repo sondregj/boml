@@ -1,27 +1,27 @@
-# TOML
+# BOML
 
 トムの明瞭で最小の言語の意味。
-（By Tom Preston Werner）
+（By Ben Preston Werner）
 
 最新版はv0.3.1です。
 
 注:この仕様はまだ固まっておらず、バージョン1.0になるまでは安定しない可能性があります。
 
-訳注:2015-01-05時点のmasterの[README.md](https://github.com/toml-lang/toml/blob/5af814581c3f118a334484b5e19584a063af9fbe/README.md)を元にしています。
+訳注:2015-01-05時点のmasterの[README.md](https://github.com/boml-lang/boml/blob/5af814581c3f118a334484b5e19584a063af9fbe/README.md)を元にしています。
 最新のバージョンとは異なる可能性があります。
 オリジナルの翻訳はgistで管理します。
 https://gist.github.com/minoritea/acde44feae7127c89873
 
 # 目的
-TOMLは明瞭なセマンティクスを持ち、可読性の高い、ミニマルな設定ファイルフォーマットとなることを目的として作られています。TOMLは曖昧さなしに連想配列に変換できるよう設計されていて、
+BOMLは明瞭なセマンティクスを持ち、可読性の高い、ミニマルな設定ファイルフォーマットとなることを目的として作られています。BOMLは曖昧さなしに連想配列に変換できるよう設計されていて、
 様々な言語上でそれらのデータ構造に展開することが出来ます。
 
 # 例
 
-```toml
-# TOMLドキュメントの例です。
+```boml
+# BOMLドキュメントの例です。
 
-title = "TOML Example"
+title = "BOML Example"
 
 [owner]
 name = "Lance Uppercut"
@@ -54,15 +54,15 @@ hosts = [
 ```
 
 # 仕様
-- TOMLはケース・センシティブです
-- TOMLファイルはユニコード(UTF-8)でエンコードされている必要があります
+- BOMLはケース・センシティブです
+- BOMLファイルはユニコード(UTF-8)でエンコードされている必要があります
 - 空白はタブ(0x09)もしくはスペース(0x20)のことです
 - 改行はLF(0x0A)もしくはCRLF(0x0D0A)です。
 
 ## コメント
 ハッシュ記号(`#`)に続けて改行までをコメントとします。
 
-```toml
+```boml
 # 好きなようにコメントできます。
 key = "value" # こんな感じで！
 ```
@@ -76,7 +76,7 @@ key = "value" # こんな感じで！
 __基本文字列__はクォーテーションマーク(`"`)で囲みます。
 クォーテーションマーク、バックスラッシュ、制御文字(U+0000 〜 U+001F)はエスケープする必要があります。その他のユニコード文字は全て文字列内で使えます。
 
-```toml
+```boml
 "文字列内では、\"エスケープできます\". Name\tJos\u00E9\nLocation\tSF."
 ```
 
@@ -97,33 +97,33 @@ __基本文字列__はクォーテーションマーク(`"`)で囲みます。
 
 全てのユニコード文字は`\uXXXX`もしくは`\UXXXXXXXX`の形式にエスケープできます。これらのエスケープコードは正しいユニコードのコードポイントである必要があります。
 
-他の特殊文字については予約されていて、もし使ってしまった場合はTOMLはエラーを出す必要があります。
+他の特殊文字については予約されていて、もし使ってしまった場合はBOMLはエラーを出す必要があります。
 
-TIPS: 上記の文字列の仕様はJSONでの文字列の仕様と全く同じと考えても構いません（ただしTOMLはUTF-8でエンコードされている必要があります）。
+TIPS: 上記の文字列の仕様はJSONでの文字列の仕様と全く同じと考えても構いません（ただしBOMLはUTF-8でエンコードされている必要があります）。
 
 ### 複数行文字列
 
-ときにはあなたは文書の一節を書いたり、とても長い行を改行したくなることがあるでしょう。TOMLでは、 __複数行文字列__をクォーテーションマーク3つずつで囲むことで表現できます。文字列の頭にすぐ改行が来た場合はその改行は取り除かれます。その他の空白と改行はそのまま保持されます。
+ときにはあなたは文書の一節を書いたり、とても長い行を改行したくなることがあるでしょう。BOMLでは、 __複数行文字列__をクォーテーションマーク3つずつで囲むことで表現できます。文字列の頭にすぐ改行が来た場合はその改行は取り除かれます。その他の空白と改行はそのまま保持されます。
 
-```toml
+```boml
 key1 = """
 Roses are red
 Violets are blue"""
 ```
 
-TOMLのパーサは改行をそのプラットフォームに応じて自由に正規化出来ます。
+BOMLのパーサは改行をそのプラットフォームに応じて自由に正規化出来ます。
 
-```toml
-# Unixでは上記のTOMLファイルは以下と同じパース結果になります:
+```boml
+# Unixでは上記のBOMLファイルは以下と同じパース結果になります:
 key2 = "Roses are red\nViolets are blue"
 
-# Windowsでは上記のTOMLファイルは以下と同じパース結果になります:
+# Windowsでは上記のBOMLファイルは以下と同じパース結果になります:
 key3 = "Roses are red\r\nViolets are blue"
 ```
 
 長い文字列を不要な行頭の空白なしに書きたい場合は、`\`を行末に書きます。`\`は全ての空白（もしくは改行）を、空白でない文字が現れるまで取り除きます。もし文字列の最初の文字が`\`だった場合は、全ての空白文字列と改行を、次の空白でない文字が現れるか、文字列の終わりまで、取り除きます。全てのエスケープシーケンスは基本文字列と同様に複数行文字列でも使えます。
 
-```toml
+```boml
 # 以下のそれぞれの文字列は同じとなります:
 key1 = "The quick brown fox jumps over the lazy dog."
 
@@ -145,21 +145,21 @@ the lazy dog.\
 
 ### リテラル文字列
 
-あなたがWindowsパスや正規表現を書くことが多い場合、バックスラッシュをエスケープすることは、面倒になったり、間違いやすくなったりします。そのような場合、TOMLはエスケープなしのリテラル形式の文字列をサポートしています(訳注:改行以外は他の制御文字も許容されるようです)。 __リテラル文字列__はシングル・クォート(`'`)で囲む必要があります。基本文字列のように一行に書きます:
+あなたがWindowsパスや正規表現を書くことが多い場合、バックスラッシュをエスケープすることは、面倒になったり、間違いやすくなったりします。そのような場合、BOMLはエスケープなしのリテラル形式の文字列をサポートしています(訳注:改行以外は他の制御文字も許容されるようです)。 __リテラル文字列__はシングル・クォート(`'`)で囲む必要があります。基本文字列のように一行に書きます:
 
-```toml
+```boml
 # そのままの文字列を得ることが出来ます.
 winpath  = 'C:\Users\nodejs\templates'
 winpath2 = '\\ServerX\admin$\system32\'
-quoted   = 'Tom "Dubs" Preston-Werner'
+quoted   = 'Ben "Dubs" Preston-Werner'
 regex    = '<\i\c*\s*>'
 ```
 
 ### 複数行リテラル文字列
 
-エスケープが無いため、シングル・クォートはリテラル文字列中では書けません。そのような場合、TOMLはリテラル文字列の複数行版をサポートしています。 __複数行リテラル文字列__はシングル・クォート3つずつで囲まれていて、改行も許します。リテラル文字列と同様エスケープはありません。文字列の頭の改行は取り除かれます。他の文字列の中身は全て変更なしに読み込まれます。
+エスケープが無いため、シングル・クォートはリテラル文字列中では書けません。そのような場合、BOMLはリテラル文字列の複数行版をサポートしています。 __複数行リテラル文字列__はシングル・クォート3つずつで囲まれていて、改行も許します。リテラル文字列と同様エスケープはありません。文字列の頭の改行は取り除かれます。他の文字列の中身は全て変更なしに読み込まれます。
 
-```toml
+```boml
 regex2 = '''I [dw]on't need \d{2} apples'''
 lines  = '''
 最初の一行は取り除かれて
@@ -175,7 +175,7 @@ lines  = '''
 
 整数は全ての数のことです(訳注：整数全体のことだと思われる)。正の数を表すときはプラス符号`+`を前につけても、つけなくても構いません。負の数の場合はマイナス符号`-`を前につけます。
 
-```toml
+```boml
 +99
 42
 0
@@ -187,7 +187,7 @@ lines  = '''
 ## 小数
 小数は整数部(プラス,マイナス符号をつけてもよい)と、それに続く小数部もしくは指数部から成ります。小数部と指数部の両方で表すことも出来ますが、その場合は小数部を指数部より前に置く必要があります。
 
-```toml
+```boml
 # 小数表記
 +1.0
 3.1415
@@ -211,7 +211,7 @@ lines  = '''
 ## ブーリアン
 ブーリアン値はただのトークンです（いつも使っているやつです）。小文字のみとします。
 
-```toml
+```boml
 true
 false
 ```
@@ -219,7 +219,7 @@ false
 ## 日付
 日付型は[RFC 3339](http://tools.ietf.org/html/rfc3339)に準じます。
 
-```toml
+```boml
 1979-05-27T07:32:00Z
 1979-05-27T00:32:00-07:00
 1979-05-27T00:32:00.999999-07:00
@@ -228,7 +228,7 @@ false
 ## 配列
 配列は角括弧で囲まれたプリミティブ型の集まりです。空白は無視されます。各要素はカンマで区切られます。各データ型を混合させることは出来ません。
 
-```toml
+```boml
 [ 1, 2, 3 ]
 [ "red", "yellow", "green" ]
 [ [ 1, 2 ], [3, 4, 5] ]
@@ -238,7 +238,7 @@ false
 
 配列は複数行に書くことも出来ます。その場合空白に加えて改行も無視されます。閉じ括弧の前にカンマを書いても構いません。
 
-```toml
+```boml
 key = [
 1, 2, 3
 ]
@@ -252,7 +252,7 @@ key = [
 ## テーブル
 テーブル（ハッシュテーブルや連想配列のことです）はキーと値のペアからなる集まりです。それは角括弧で囲まれたテーブル名が書かれた行から始まります。配列は必ず値として表記されるので、テーブルの角括弧と配列は簡単に区別することが出来ます。
 
-```toml
+```boml
 [table]
 ```
 
@@ -262,14 +262,14 @@ key = [
 
 テーブル内のキーと値の各ペアの順番は保証されません。
 
-```toml
+```boml
 [table]
 key = "value"
 ```
 
 ドット(`.`)がキーに使えないのは、ネストしたテーブルを表すのにドットを使うからです。各ドットで分割された部分の命名規則は上記のキーの命名規則に準じます。
 
-```toml
+```boml
 [dog.tater]
 type = "pug"
 ```
@@ -282,7 +282,7 @@ type = "pug"
 
 もし、上位のテーブルそのものを記述する必要がないのであれば、省略することも出来ます。
 
-```toml
+```boml
 # [x] 省略可
 # [x.y] これも可
 # [x.y.z] これも省略可
@@ -293,7 +293,7 @@ type = "pug"
 
 上位のテーブルの定義を省略した場合、後からそのテーブルの内容を書くことが出来ます(後から書くキーも定義されていない場合のみ)。
 
-```toml
+```boml
 [a.b]
 c = 1
 
@@ -303,7 +303,7 @@ d = 2
 
 キーやテーブルを再定義することは出来ません。不正となります。
 
-```toml
+```boml
 # やっちゃダメです
 
 [a]
@@ -313,7 +313,7 @@ b = 1
 c = 2
 ```
 
-```toml
+```boml
 # ダメですってば
 
 [a]
@@ -325,8 +325,8 @@ c = 2
 
 テーブル名、キーを空にすることは出来ません。
 
-```toml
-# 不正なTOMLです
+```boml
+# 不正なBOMLです
 []
 [a.]
 [a..b]
@@ -338,7 +338,7 @@ c = 2
 ## テーブルの配列
 最後の型はテーブルの配列です。テーブル名を角括弧で二重に囲むことで表されます。二重角括弧で囲まれた同じテーブル名を持つテーブルは、配列の要素となります。テーブルは表記順に配列に挿入されます。配列内のキーと値のペアを持たないテーブルは空のテーブルとして扱われます。
 
-```toml
+```boml
 [[products]]
 name = "Hammer"
 sku = 738594937
@@ -365,7 +365,7 @@ color = "gray"
 
 あなたはネストしたテーブルの配列を作ることも出来ます。その場合は、子テーブルにも二重角括弧表記を使ってください。それぞれのテーブルは、その上の最も近い場所に定義されている親テーブルの要素となる配列に属します。
 
-```toml
+```boml
 [[fruit]]
 name = "apple"
 
@@ -386,7 +386,7 @@ name = "banana"
 name = "plantain"
 ```
 
-上記のTOMLは下記のJSONに置き換えることができます。
+上記のBOMLは下記のJSONに置き換えることができます。
 
 ```json
 {
@@ -414,8 +414,8 @@ name = "plantain"
 
 既にテーブルの配列として定義されたテーブルの後に、同じ名前を持つ通常のテーブルを定義しようとした場合、パースする際にエラーとすべきです。
 
-```toml
-# 不正なTOMLドキュメント
+```boml
+# 不正なBOMLドキュメント
 [[fruit]]
 name = "apple"
 
@@ -438,85 +438,85 @@ YES
 
 # 実装
 ## パーサ
-もしパーサを作ったのならここに追加してプルリク送ってください。それと、パーサのREADMEには、サポートするTOMLのバージョンをgitのタグかハッシュの形式で書くようお願いします。
+もしパーサを作ったのならここに追加してプルリク送ってください。それと、パーサのREADMEには、サポートするBOMLのバージョンをgitのタグかハッシュの形式で書くようお願いします。
 
-- C#/.NET - https://github.com/LBreedlove/Toml.net
-- C#/.NET - https://github.com/rossipedia/toml-net
-- C#/.NET - https://github.com/RichardVasquez/TomlDotNet
-- C#/.NET - https://github.com/azyobuzin/HyperTomlProcessor
-- C (@ajwans) - https://github.com/ajwans/libtoml
-- C (@mzgoddard) - https://github.com/mzgoddard/tomlc
-- C++ (@evilncrazy) - https://github.com/evilncrazy/ctoml
-- C++ (@skystrife) - https://github.com/skystrife/cpptoml
-- C++ (@mayah) - https://github.com/mayah/tinytoml
-- Clojure (@lantiga) - https://github.com/lantiga/clj-toml
+- C#/.NET - https://github.com/LBreedlove/Boml.net
+- C#/.NET - https://github.com/rossipedia/boml-net
+- C#/.NET - https://github.com/RichardVasquez/BomlDotNet
+- C#/.NET - https://github.com/azyobuzin/HyperBomlProcessor
+- C (@ajwans) - https://github.com/ajwans/libboml
+- C (@mzgoddard) - https://github.com/mzgoddard/bomlc
+- C++ (@evilncrazy) - https://github.com/evilncrazy/cboml
+- C++ (@skystrife) - https://github.com/skystrife/cppboml
+- C++ (@mayah) - https://github.com/mayah/tinyboml
+- Clojure (@lantiga) - https://github.com/lantiga/clj-boml
 - Clojure (@manicolosi) - https://github.com/manicolosi/clojoml
-- CoffeeScript (@biilmann) - https://github.com/biilmann/coffee-toml
-- Common Lisp (@pnathan) - https://github.com/pnathan/pp-toml
-- Erlang - https://github.com/kalta/etoml.git
-- Erlang - https://github.com/kaos/tomle
-- Emacs Lisp (@gongoZ) - https://github.com/gongo/emacs-toml
-- Go (@thompelletier) - https://github.com/pelletier/go-toml
-- Go (@laurent22) - https://github.com/laurent22/toml-go
-- Go w/ Reflection (@BurntSushi) - https://github.com/BurntSushi/toml
-- Go (@achun) - https://github.com/achun/tom-toml
-- Go (@naoina) - https://github.com/naoina/toml
-- Haskell (@seliopou) - https://github.com/seliopou/toml
-- Haxe (@raincole) - https://github.com/raincole/haxetoml
-- Java (@agrison) - https://github.com/agrison/jtoml
-- Java (@johnlcox) - https://github.com/johnlcox/toml4j
-- Java (@mwanji) - https://github.com/mwanji/toml4j
-- Java - https://github.com/asafh/jtoml
-- Java w/ ANTLR (@MatthiasSchuetz) - https://github.com/mschuetz/toml
-- Julia (@pygy) - https://github.com/pygy/TOML.jl
-- Literate CoffeeScript (@JonathanAbrams) - https://github.com/JonAbrams/tomljs
-- node.js/browser - https://github.com/ricardobeat/toml.js (npm install tomljs)
-- node.js - https://github.com/BinaryMuse/toml-node
+- CoffeeScript (@biilmann) - https://github.com/biilmann/coffee-boml
+- Common Lisp (@pnathan) - https://github.com/pnathan/pp-boml
+- Erlang - https://github.com/kalta/eboml.git
+- Erlang - https://github.com/kaos/bomle
+- Emacs Lisp (@gongoZ) - https://github.com/gongo/emacs-boml
+- Go (@thompelletier) - https://github.com/pelletier/go-boml
+- Go (@laurent22) - https://github.com/laurent22/boml-go
+- Go w/ Reflection (@BurntSushi) - https://github.com/BurntSushi/boml
+- Go (@achun) - https://github.com/achun/ben-boml
+- Go (@naoina) - https://github.com/naoina/boml
+- Haskell (@seliopou) - https://github.com/seliopou/boml
+- Haxe (@raincole) - https://github.com/raincole/haxeboml
+- Java (@agrison) - https://github.com/agrison/jboml
+- Java (@johnlcox) - https://github.com/johnlcox/boml4j
+- Java (@mwanji) - https://github.com/mwanji/boml4j
+- Java - https://github.com/asafh/jboml
+- Java w/ ANTLR (@MatthiasSchuetz) - https://github.com/mschuetz/boml
+- Julia (@pygy) - https://github.com/pygy/BOML.jl
+- Literate CoffeeScript (@JonathanAbrams) - https://github.com/JonAbrams/bomljs
+- node.js/browser - https://github.com/ricardobeat/boml.js (npm install bomljs)
+- node.js - https://github.com/BinaryMuse/boml-node
 - node.js/browser (@redhotvengeance) - https://github.com/redhotvengeance/topl (topl npm package)
-- node.js/browser (@alexanderbeletsky) - https://github.com/alexanderbeletsky/toml-js (npm browser amd)
-- Objective C (@mneorr) - https://github.com/mneorr/toml-objc.git
-- Objective-C (@SteveStreza) - https://github.com/amazingsyco/TOML
+- node.js/browser (@alexanderbeletsky) - https://github.com/alexanderbeletsky/boml-js (npm browser amd)
+- Objective C (@mneorr) - https://github.com/mneorr/boml-objc.git
+- Objective-C (@SteveStreza) - https://github.com/amazingsyco/BOML
 - OCaml (@mackwic) https://github.com/mackwic/to.ml
-- Perl (@alexkalderimis) - https://github.com/alexkalderimis/config-toml.pl
-- Perl - https://github.com/dlc/toml
-- PHP (@leonelquinteros) - https://github.com/leonelquinteros/php-toml.git
-- PHP (@jimbomoss) - https://github.com/jamesmoss/toml
-- PHP (@coop182) - https://github.com/coop182/toml-php
-- PHP (@checkdomain) - https://github.com/checkdomain/toml
-- PHP (@zidizei) - https://github.com/zidizei/toml-php
-- PHP (@yosymfony) - https://github.com/yosymfony/toml
-- Python (@f03lipe) - https://github.com/f03lipe/toml-python
-- Python (@uiri) - https://github.com/uiri/toml
-- Python - https://github.com/bryant/pytoml
-- Python (@elssar) - https://github.com/elssar/tomlgun
-- Python (@marksteve) - https://github.com/marksteve/toml-ply
-- Python (@hit9) - https://github.com/hit9/toml.py
-- Racket (@greghendershott) - https://github.com/greghendershott/toml
-- Ruby (@jm) - https://github.com/jm/toml (toml gem)
-- Ruby (@eMancu) - https://github.com/eMancu/toml-rb (toml-rb gem)
-- Ruby (@charliesome) - https://github.com/charliesome/toml2 (toml2 gem)
-- Ruby (@sandeepravi) - https://github.com/sandeepravi/tomlp (tomlp gem)
-- Rust (@mneumann) - https://github.com/mneumann/rust-toml
-- Rust (@alexcrichton) - https://github.com/alexcrichton/toml-rs
-- Scala - https://github.com/axelarge/tomelette
+- Perl (@alexkalderimis) - https://github.com/alexkalderimis/config-boml.pl
+- Perl - https://github.com/dlc/boml
+- PHP (@leonelquinteros) - https://github.com/leonelquinteros/php-boml.git
+- PHP (@jimbomoss) - https://github.com/jamesmoss/boml
+- PHP (@coop182) - https://github.com/coop182/boml-php
+- PHP (@checkdomain) - https://github.com/checkdomain/boml
+- PHP (@zidizei) - https://github.com/zidizei/boml-php
+- PHP (@yosymfony) - https://github.com/yosymfony/boml
+- Python (@f03lipe) - https://github.com/f03lipe/boml-python
+- Python (@uiri) - https://github.com/uiri/boml
+- Python - https://github.com/bryant/pyboml
+- Python (@elssar) - https://github.com/elssar/bomlgun
+- Python (@marksteve) - https://github.com/marksteve/boml-ply
+- Python (@hit9) - https://github.com/hit9/boml.py
+- Racket (@greghendershott) - https://github.com/greghendershott/boml
+- Ruby (@jm) - https://github.com/jm/boml (boml gem)
+- Ruby (@eMancu) - https://github.com/eMancu/boml-rb (boml-rb gem)
+- Ruby (@charliesome) - https://github.com/charliesome/boml2 (boml2 gem)
+- Ruby (@sandeepravi) - https://github.com/sandeepravi/bomlp (bomlp gem)
+- Rust (@mneumann) - https://github.com/mneumann/rust-boml
+- Rust (@alexcrichton) - https://github.com/alexcrichton/boml-rs
+- Scala - https://github.com/axelarge/benelette
 
 ## バリデータ
 
-- Go (@BurntSushi) - https://github.com/BurntSushi/toml/tree/master/cmd/tomlv
+- Go (@BurntSushi) - https://github.com/BurntSushi/boml/tree/master/cmd/bomlv
 
 ## 言語によらないデコーダとエンコーダのテストスイート
-- toml-test (@BurntSushi) - https://github.com/BurntSushi/toml-test
+- boml-test (@BurntSushi) - https://github.com/BurntSushi/boml-test
 
 ## エディタ・サポート
-- Emacs (@dryman) - https://github.com/dryman/toml-mode.el
-- Sublime Text 2 & 3 (@lmno) - https://github.com/lmno/TOML
-- TextMate (@infininight) - https://github.com/textmate/toml.tmbundle
-- Vim (@cespare) - https://github.com/cespare/vim-toml
-- Notepad++ (@fireforge) - https://github.com/fireforge/toml-notepadplusplus
+- Emacs (@dryman) - https://github.com/dryman/boml-mode.el
+- Sublime Text 2 & 3 (@lmno) - https://github.com/lmno/BOML
+- TextMate (@infininight) - https://github.com/textmate/boml.tmbundle
+- Vim (@cespare) - https://github.com/cespare/vim-boml
+- Notepad++ (@fireforge) - https://github.com/fireforge/boml-notepadplusplus
 
 ## エンコーダ
-- Go w/ Reflection (@BurntSushi) - https://github.com/BurntSushi/toml
-- PHP (@ayushchd) - https://github.com/ayushchd/php-toml-encoder
+- Go w/ Reflection (@BurntSushi) - https://github.com/BurntSushi/boml
+- PHP (@ayushchd) - https://github.com/ayushchd/php-boml-encoder
 
 ## コンバータ
 - remarshal (@dbohdan) - https://github.com/dbohdan/remarshal
