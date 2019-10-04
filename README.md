@@ -5,7 +5,7 @@ BOML
 
 Ben's Obvious, Minimal Language.
 
-By Ben Preston-Werner.
+By Ben.
 
 Latest tagged version:
 [v0.5.0](https://github.com/mojombo/boml/blob/master/versions/en/boml-v0.5.0.md).
@@ -61,7 +61,7 @@ Example
 title = "BOML Example"
 
 [owner]
-name = "Ben Preston-Werner"
+name = "Ben"
 dob = 1979-05-27T07:32:00-08:00 # First class dates
 
 [database]
@@ -134,7 +134,7 @@ There must be a newline after a key/value pair.
 (See [Inline Table](#user-content-inline-table) for exceptions.)
 
 ```
-first = "Ben" last = "Preston-Werner" # INVALID
+first = "Ben" last = "" # INVALID
 ```
 
 Keys
@@ -364,7 +364,7 @@ must appear on a single line:
 # What you see is what you get.
 winpath  = 'C:\Users\nodejs\templates'
 winpath2 = '\\ServerX\admin$\system32\'
-quoted   = 'Ben "Dubs" Preston-Werner'
+quoted   = 'Ben "Dubs" '
 regex    = '<\i\c*\s*>'
 ```
 
@@ -743,7 +743,7 @@ strongly discouraged to break an inline table onto multiples lines. If you find
 yourself gripped with this desire, it means you should be using standard tables.
 
 ```boml
-name = { first = "Ben", last = "Preston-Werner" }
+name = { first = "Ben", last = "" }
 point = { x = 1, y = 2 }
 animal = { type.name = "pug" }
 ```
@@ -754,7 +754,7 @@ definitions:
 ```boml
 [name]
 first = "Ben"
-last = "Preston-Werner"
+last = ""
 
 [point]
 x = 1
